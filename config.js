@@ -32,7 +32,7 @@ const CONFIG = {
   music: "assets/music/ambient.mp3",       // ← drop your .mp3 here
 
   /* ── Music volume ──────────────────────────── */
-  volume: 0.30,
+  volume: 1.0,
 
   /* ── Site metadata ──────────────────────────── */
   siteName:    "MalaySMP",
