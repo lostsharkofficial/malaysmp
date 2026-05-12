@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MalaySMP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:       #c9a84c;
+      --gold-light: #f0d080;
+      --gold-glow:  #ffcc44;
+      --cream:      #e8dcc8;
+      --dark:       #0a0806;
+      --ember:      #ff6b2b;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--dark);
+      cursor: default;
+    }
+
+    /* ── Background ─────────────────────────── */
+    #bg {
+      position: fixed; inset: 0; z-index: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: opacity 1.2s ease;
+      opacity: 0;
+    }
+    #bg.loaded { opacity: 1; }
+    #bg-overlay {
+      position: fixed; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.88) 0%,
+        rgba(0,0,0,0.60) 45%,
+        rgba(0,0,0,0.25) 100%
+      );
+    }
+    /* subtle vignette */
+    #bg-overlay::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%);
+    }
+
+    /* ── Particle embers ────────────────────── */
+    #particles { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+    .ember {
+      position: absolute; bottom: -10px;
+      border-radius: 50%;
+      opacity: 0;
+      animation: rise linear infinite;
+    }
+    @keyframes rise {
+      0%   { transform: translateX(0)    translateY(0)   scale(1);   opacity: 0; }
+      10%  { opacity: .9; }
+      90%  { opacity: .4; }
+      100% { transform: translateX(var(--drift)) translateY(-110vh) scale(0.2); opacity: 0; }
+    }
+
+    /* ── Layout ─────────────────────────────── */
+    #stage {
+      position: relative; z-index: 10;
+      width: 100%; height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 0 6vw;
+    }
+
+    /* ── Title ──────────────────────────────── */
+    .title-wrap {
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeDown 1s ease 0.4s forwards;
+    }
+    .title-sub {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+      letter-spacing: 0.45em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      opacity: 0.8;
+    }
+    .title-main {
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      line-height: 0.95;
+      color: transparent;
+      background: linear-gradient(160deg, #fff8e1 0%, var(--gold-light) 35%, var(--gold) 65%, #8b6914 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(201,168,76,0.55));
+      text-shadow: none;
+      letter-spacing: 0.04em;
+    }
+    .title-tagline {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(0.8rem, 1.5vw, 1rem);
+      color: var(--cream);
+      opacity: 0.55;
+      margin-top: 0.6rem;
+      letter-spacing: 0.08em;
+    }
+    /* ember glow line */
+    .title-rule {
+      display: block;
+      width: clamp(120px, 18vw, 220px);
+      height: 1px;
+      margin-top: 1.1rem;
+      background: linear-gradient(to right, var(--gold), transparent);
+      box-shadow: 0 0 8px var(--gold-glow);
+    }
+
+    /* ── Menu ───────────────────────────────── */
+    nav {
+      display: flex; flex-direction: column;
+      gap: 0.15rem;
+    }
+    .menu-item {
+      display: inline-flex; align-items: center; gap: 0.9rem;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--cream);
+      text-decoration: none;
+      padding: 0.45rem 0;
+      position: relative;
+      width: fit-content;
+      opacity: 0;
+      transform: translateX(-18px);
+      transition: color 0.3s ease, letter-spacing 0.3s ease;
+    }
+    .menu-item:nth-child(1) { animation: slideIn 0.7s ease 0.8s  forwards; }
+    .menu-item:nth-child(2) { animation: slideIn 0.7s ease 0.95s forwards; }
+    .menu-item:nth-child(3) { animation: slideIn 0.7s ease 1.1s  forwards; }
+    .menu-item:nth-child(4) { animation: slideIn 0.7s ease 1.25s forwards; }
+
+    /* left tick */
+    .menu-item::before {
+      content: '▸';
+      font-size: 0.6em;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    /* underline glow */
+    .menu-item::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: linear-gradient(to right, var(--gold-glow), transparent);
+      box-shadow: 0 0 6px var(--gold-glow);
+      transition: width 0.35s ease;
+    }
+    .menu-item:hover,
+    .menu-item:focus-visible {
+      color: var(--gold-light);
+      letter-spacing: 0.25em;
+      outline: none;
+    }
+    .menu-item:hover::before,
+    .menu-item:focus-visible::before { opacity: 1; transform: translateX(0); }
+    .menu-item:hover::after,
+    .menu-item:focus-visible::after  { width: 100%; }
+
+    /* active / current highlight */
+    .menu-item.active {
+      color: var(--gold);
+      animation: slideIn 0.7s ease forwards;
+    }
+    .menu-item.active::before { opacity: 1; transform: translateX(0); }
+
+    /* ── Version tag ────────────────────────── */
+    #version {
+      position: fixed; bottom: 1.8rem; left: 6vw;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--cream);
+      opacity: 0.3;
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.6s forwards;
+    }
+
+    /* ── Audio button ───────────────────────── */
+    #audio-btn {
+      position: fixed; bottom: 1.8rem; right: 2rem;
+      z-index: 20;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50%;
+      width: 2.4rem; height: 2.4rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--gold);
+      font-size: 1rem;
+      transition: background 0.25s, border-color 0.25s;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+    }
+    #audio-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+    #audio-btn.muted { opacity: 0.4; }
+
+    /* ── Mobile swipe hint ──────────────────── */
+    #swipe-hint {
+      display: none;
+      position: fixed; bottom: 4.5rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--cream);
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards, pulse 3s ease 3s infinite;
+      z-index: 10;
+      text-align: center;
+    }
+
+    /* ── Keyframes ──────────────────────────── */
+    @keyframes fadeDown {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 0.5; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    /* ── Mobile ─────────────────────────────── */
+    @media (max-width: 600px) {
+      #stage {
+        padding: 0 8vw;
+        justify-content: flex-end;
+        padding-bottom: 8rem;
+      }
+      .title-main { font-size: clamp(2.4rem, 11vw, 3.5rem); }
+      .title-wrap { margin-bottom: 2.5rem; }
+      .menu-item  { font-size: clamp(1rem, 5vw, 1.2rem); padding: 0.6rem 0; }
+      #swipe-hint { display: block; }
+      #bg-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0,0,0,0.95) 0%,
+          rgba(0,0,0,0.55) 55%,
+          rgba(0,0,0,0.25) 100%
+        );
+      }
+    }
+
+    /* ── Page transition out ────────────────── */
+    body.fade-out { animation: fadeOut 0.5s ease forwards; }
+    @keyframes fadeOut { to { opacity: 0; } }
+  </style>
+</head>
+<body>
+
+<!-- Background -->
+<div id="bg"></div>
+<div id="bg-overlay"></div>
+
+<!-- Ember particles -->
+<div id="particles"></div>
+
+<!-- Main stage -->
+<div id="stage">
+  <div class="title-wrap">
+    <p class="title-sub">Official Website</p>
+    <h1 class="title-main">MalaySMP</h1>
+    <p class="title-tagline" id="tagline">A Community Beyond the Horizon</p>
+    <span class="title-rule"></span>
+  </div>
+
+  <nav id="menu" aria-label="Main Navigation">
+    <a href="events.html"  class="menu-item">Events</a>
+    <a href="gallery.html" class="menu-item">Gallery</a>
+    <a href="media.html"   class="menu-item">Media</a>
+    <a href="about.html"   class="menu-item">About Us</a>
+  </nav>
+</div>
+
+<!-- Version & audio -->
+<div id="version"></div>
+<button id="audio-btn" aria-label="Toggle music" title="Toggle music">♪</button>
+<p id="swipe-hint">SWIPE UP TO EXPLORE</p>
+
+<!-- Audio element -->
+<audio id="bgm" loop preload="none"></audio>
+
+<!-- Config + scripts -->
+<script src="config.js"></script>
+<script>
+  /* ── Apply config ─────────────────────────── */
+  document.getElementById('version').textContent = CONFIG.version;
+  document.getElementById('tagline').textContent = CONFIG.siteTagline;
+  document.title = CONFIG.siteName;
+
+  // Background image
+  const bg  = document.getElementById('bg');
+  const img = new Image();
+  img.onload  = () => { bg.style.backgroundImage = `url('${CONFIG.background}')`; bg.classList.add('loaded'); };
+  img.onerror = () => { bg.style.background = CONFIG.backgroundFallback; bg.classList.add('loaded'); };
+  img.src = CONFIG.background;
+
+  /* ── Audio ───────────────────────────────── */
+  const bgm = document.getElementById('bgm');
+  const btn = document.getElementById('audio-btn');
+  let audioStarted = false;
+  let muted = false;
+
+  bgm.src    = CONFIG.music;
+  bgm.volume = CONFIG.volume;
+
+  function startAudio() {
+    if (audioStarted) return;
+    bgm.play().then(() => { audioStarted = true; }).catch(() => {});
+  }
+
+  // Start on first user interaction
+  document.addEventListener('click',     startAudio, { once: true });
+  document.addEventListener('touchstart', startAudio, { once: true });
+  document.addEventListener('keydown',   startAudio, { once: true });
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    startAudio();
+    muted = !muted;
+    bgm.muted = muted;
+    btn.textContent = muted ? '♪̶' : '♪';
+    btn.classList.toggle('muted', muted);
+    btn.setAttribute('aria-label', muted ? 'Unmute music' : 'Mute music');
+  });
+
+  /* ── Embers ──────────────────────────────── */
+  const pContainer = document.getElementById('particles');
+  const EMBER_COUNT = 28;
+  const COLORS = ['#ff9944','#ffcc44','#ff6622','#ffdd88','#ff8833'];
+
+  for (let i = 0; i < EMBER_COUNT; i++) {
+    const e = document.createElement('div');
+    e.className = 'ember';
+    const size  = Math.random() * 4 + 1.5;
+    const delay = Math.random() * 12;
+    const dur   = Math.random() * 14 + 8;
+    const left  = Math.random() * 55;         // left half mostly
+    const drift = (Math.random() - 0.5) * 120;
+    e.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${left}%;
+      background:${COLORS[Math.floor(Math.random()*COLORS.length)]};
+      box-shadow: 0 0 ${size*2}px ${COLORS[0]};
+      animation-duration:${dur}s;
+      animation-delay:-${delay}s;
+      --drift:${drift}px;
+    `;
+    pContainer.appendChild(e);
+  }
+
+  /* ── Menu nav with page transition ──────── */
+  document.querySelectorAll('.menu-item').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || href === '#') return;
+      e.preventDefault();
+      document.body.classList.add('fade-out');
+      setTimeout(() => { window.location.href = href; }, 480);
+    });
+  });
+
+  /* ── Mobile touch swipe (up = events) ───── */
+  let touchY = 0;
+  document.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchend',   e => {
+    const dy = touchY - e.changedTouches[0].clientY;
+    if (dy > 60) navigateTo('events.html');
+  }, { passive: true });
+
+  function navigateTo(href) {
+    document.body.classList.add('fade-out');
+    setTimeout(() => { window.location.href = href; }, 480);
+  }
+</script>
+</body>
+</html>

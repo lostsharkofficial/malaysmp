@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events — MalaySMP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="inner.css" />
+</head>
+<body>
+
+<div id="bg"></div>
+<div id="bg-overlay"></div>
+
+<!-- Top Nav -->
+<header id="topnav">
+  <a href="index.html" class="nav-logo">MalaySMP</a>
+  <button id="ham" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="events.html"  class="nav-link">Events</a></li>
+    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+    <li><a href="media.html"   class="nav-link">Media</a></li>
+    <li><a href="about.html"   class="nav-link">About Us</a></li>
+  </ul>
+</header>
+
+<!-- Mobile drawer -->
+<nav id="nav-drawer">
+  <a href="events.html"  class="nav-link">Events</a>
+  <a href="gallery.html" class="nav-link">Gallery</a>
+  <a href="media.html"   class="nav-link">Media</a>
+  <a href="about.html"   class="nav-link">About Us</a>
+</nav>
+
+<!-- Content -->
+<main id="page">
+  <p class="page-eyebrow">What's Happening</p>
+  <h1 class="page-title">Events</h1>
+  <span class="page-rule"></span>
+  <p class="page-lead">
+    From grand tournaments to community gatherings — every event in the MalaySMP universe is chronicled here.
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="tag">Upcoming</div>
+      <p class="card-icon">🏆</p>
+      <h2 class="card-title">Grand Tournament Season 3</h2>
+      <p class="card-body">The biggest PvP competition of the year. Register your team before slots fill up. Prize pool to be announced.</p>
+    </div>
+    <div class="card">
+      <div class="tag">Upcoming</div>
+      <p class="card-icon">🏗️</p>
+      <h2 class="card-title">Build Challenge: Nusantara Edition</h2>
+      <p class="card-body">Celebrate Southeast Asian architecture. Build anything inspired by the region's rich heritage.</p>
+    </div>
+    <div class="card">
+      <div class="tag">Ongoing</div>
+      <p class="card-icon">🌙</p>
+      <h2 class="card-title">Ramadan Night Market</h2>
+      <p class="card-body">A special in-server bazaar with unique trades, decorations, and community storytelling every evening.</p>
+    </div>
+    <div class="card">
+      <div class="tag">Past</div>
+      <p class="card-icon">⚔️</p>
+      <h2 class="card-title">War of the Kingdoms</h2>
+      <p class="card-body dim">Factions clashed for dominance over the northern highlands. Watch the recap in our Media section.</p>
+    </div>
+  </div>
+</main>
+
+<button id="audio-btn" aria-label="Toggle music">♪</button>
+<audio id="bgm" loop preload="none"></audio>
+
+<script src="config.js"></script>
+<script src="shell.js"></script>
+<script>
+  buildPage({ pageTitle: 'Events' });
+
+  // Hamburger
+  const ham = document.getElementById('ham');
+  const drawer = document.getElementById('nav-drawer');
+  ham.addEventListener('click', () => {
+    ham.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — MalaySMP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="inner.css" />
+  <style>
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.8rem;
+    }
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.15);
+      cursor: pointer;
+      background: rgba(20,15,8,0.6);
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.5s ease;
+      filter: brightness(0.75) saturate(0.8);
+    }
+    .gallery-item:hover img { transform: scale(1.07); filter: brightness(0.9) saturate(1); }
+    .gallery-item-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 1.2rem 1rem 0.7rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      color: var(--gold-light);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-item-label { opacity: 1; }
+    /* placeholder boxes when no images yet */
+    .gallery-placeholder {
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif; font-size: 0.6rem;
+      letter-spacing: 0.2em; color: var(--gold); opacity: 0.3;
+      text-transform: uppercase;
+      background: rgba(201,168,76,0.04);
+    }
+
+    /* Lightbox */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 100;
+      background: rgba(0,0,0,0.92);
+      align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; border: 1px solid rgba(201,168,76,0.2); }
+    #lightbox-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-size: 1.5rem; color: var(--gold); cursor: pointer;
+      background: none; border: none; font-family: serif;
+    }
+  </style>
+</head>
+<body>
+
+<div id="bg"></div>
+<div id="bg-overlay"></div>
+
+<header id="topnav">
+  <a href="index.html" class="nav-logo">MalaySMP</a>
+  <button id="ham" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="events.html"  class="nav-link">Events</a></li>
+    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+    <li><a href="media.html"   class="nav-link">Media</a></li>
+    <li><a href="about.html"   class="nav-link">About Us</a></li>
+  </ul>
+</header>
+
+<nav id="nav-drawer">
+  <a href="events.html"  class="nav-link">Events</a>
+  <a href="gallery.html" class="nav-link">Gallery</a>
+  <a href="media.html"   class="nav-link">Media</a>
+  <a href="about.html"   class="nav-link">About Us</a>
+</nav>
+
+<main id="page">
+  <p class="page-eyebrow">Screenshots & Moments</p>
+  <h1 class="page-title">Gallery</h1>
+  <span class="page-rule"></span>
+  <p class="page-lead">
+    The most breathtaking builds, battles, and moments captured from across the MalaySMP world.
+    Drop your screenshots in <code style="color:var(--gold);font-size:0.85em">#gallery</code> on Discord!
+  </p>
+
+  <!--
+    ╔═══════════════════════════════════════════════════════╗
+    ║  HOW TO ADD PHOTOS                                    ║
+    ║  1. Drop your images into assets/images/gallery/      ║
+    ║  2. Copy one <div class="gallery-item"> block below   ║
+    ║  3. Change the src and label text                     ║
+    ╚═══════════════════════════════════════════════════════╝
+  -->
+  <div class="gallery-grid" id="gallery-grid">
+
+    <!-- Placeholder slots — replace src with real screenshots -->
+    <div class="gallery-item gallery-placeholder">Photo Coming Soon</div>
+    <div class="gallery-item gallery-placeholder">Photo Coming Soon</div>
+    <div class="gallery-item gallery-placeholder">Photo Coming Soon</div>
+    <div class="gallery-item gallery-placeholder">Photo Coming Soon</div>
+    <div class="gallery-item gallery-placeholder">Photo Coming Soon</div>
+    <div class="gallery-item gallery-placeholder">Photo Coming Soon</div>
+
+    <!--
+    EXAMPLE — uncomment and edit:
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="assets/images/gallery/spawn.jpg" alt="Spawn area" loading="lazy" />
+      <span class="gallery-item-label">The Spawn — Season 2</span>
+    </div>
+    -->
+  </div>
+</main>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<button id="audio-btn" aria-label="Toggle music">♪</button>
+<audio id="bgm" loop preload="none"></audio>
+
+<script src="config.js"></script>
+<script src="shell.js"></script>
+<script>
+  buildPage({ pageTitle: 'Gallery' });
+  const ham = document.getElementById('ham');
+  const drawer = document.getElementById('nav-drawer');
+  ham.addEventListener('click', () => { ham.classList.toggle('open'); drawer.classList.toggle('open'); });
+
+  function openLightbox(el) {
+    const img = el.querySelector('img');
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeLightbox();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>

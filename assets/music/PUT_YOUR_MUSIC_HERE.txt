@@ -1,0 +1,9 @@
+Drop your ambient .mp3 music file here.
+
+Rename it to: ambient.mp3
+Or change the music path in config.js to match your filename.
+
+Free royalty-free ambient music:
+- https://pixabay.com/music/ (search "ambient" or "dark orchestral")
+- https://freemusicarchive.org
+- https://www.zapsplat.com

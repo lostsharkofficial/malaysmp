@@ -1,0 +1,12 @@
+Drop your background image here.
+
+Then update config.js:
+  background: "assets/images/your-photo.jpg"
+
+For gallery screenshots, use the assets/images/gallery/ subfolder.
+For team photos, use assets/images/team/.
+
+Free atmospheric photos (mountain / night / dramatic):
+- https://unsplash.com/s/photos/mountain-night
+- https://unsplash.com/s/photos/dramatic-landscape
+Download at 1920×1080 or larger.

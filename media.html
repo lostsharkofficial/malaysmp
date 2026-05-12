@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media — MalaySMP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="inner.css" />
+  <style>
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.4rem;
+      margin-bottom: 4rem;
+    }
+    .media-card {
+      background: var(--panel);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .media-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.4); box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
+
+    /* YouTube embed wrapper */
+    .video-wrap {
+      position: relative; width: 100%; padding-top: 56.25%;
+      background: rgba(0,0,0,0.6);
+    }
+    .video-wrap iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    /* placeholder for no video */
+    .video-placeholder {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; color: var(--gold); opacity: 0.3;
+      font-family: 'Cinzel', serif;
+      flex-direction: column; gap: 0.5rem;
+    }
+    .video-placeholder small {
+      font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
+    }
+    .media-info { padding: 1.2rem 1.4rem 1.4rem; }
+    .media-tag  { margin-bottom: 0.5rem; }
+    .media-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem; letter-spacing: 0.1em;
+      color: var(--gold-light); margin-bottom: 0.5rem;
+    }
+    .media-desc { font-size: 0.85rem; opacity: 0.6; line-height: 1.65; }
+
+    /* Social links */
+    .social-row {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      margin-top: 1rem;
+    }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--gold); text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.35);
+      padding: 0.55rem 1.1rem;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .social-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<div id="bg"></div>
+<div id="bg-overlay"></div>
+
+<header id="topnav">
+  <a href="index.html" class="nav-logo">MalaySMP</a>
+  <button id="ham" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="events.html"  class="nav-link">Events</a></li>
+    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+    <li><a href="media.html"   class="nav-link">Media</a></li>
+    <li><a href="about.html"   class="nav-link">About Us</a></li>
+  </ul>
+</header>
+
+<nav id="nav-drawer">
+  <a href="events.html"  class="nav-link">Events</a>
+  <a href="gallery.html" class="nav-link">Gallery</a>
+  <a href="media.html"   class="nav-link">Media</a>
+  <a href="about.html"   class="nav-link">About Us</a>
+</nav>
+
+<main id="page">
+  <p class="page-eyebrow">Videos & Socials</p>
+  <h1 class="page-title">Media</h1>
+  <span class="page-rule"></span>
+  <p class="page-lead">
+    Trailers, event recaps, and community highlights. Subscribe and follow to never miss a moment.
+  </p>
+
+  <!--
+    HOW TO ADD YOUTUBE VIDEOS:
+    Replace YOUR_VIDEO_ID with the ID from the YouTube URL.
+    e.g. https://youtube.com/watch?v=dQw4w9WgXcQ → ID = dQw4w9WgXcQ
+  -->
+  <div class="media-grid">
+
+    <div class="media-card">
+      <div class="video-wrap">
+        <!-- REPLACE: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+        <div class="video-placeholder">▶ <small>Video Coming Soon</small></div>
+      </div>
+      <div class="media-info">
+        <div class="tag media-tag">Trailer</div>
+        <h2 class="media-title">Season 3 Official Trailer</h2>
+        <p class="media-desc">The new season begins. New lands, new alliances, new wars.</p>
+      </div>
+    </div>
+
+    <div class="media-card">
+      <div class="video-wrap">
+        <div class="video-placeholder">▶ <small>Video Coming Soon</small></div>
+      </div>
+      <div class="media-info">
+        <div class="tag media-tag">Event Recap</div>
+        <h2 class="media-title">War of the Kingdoms — Highlights</h2>
+        <p class="media-desc">The best moments from MalaySMP's greatest faction war.</p>
+      </div>
+    </div>
+
+    <div class="media-card">
+      <div class="video-wrap">
+        <div class="video-placeholder">▶ <small>Video Coming Soon</small></div>
+      </div>
+      <div class="media-info">
+        <div class="tag media-tag">Community</div>
+        <h2 class="media-title">Best Builds of the Month</h2>
+        <p class="media-desc">Our community's most stunning creations — voted by players.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Social links -->
+  <p class="page-eyebrow" style="margin-bottom:1rem">Find Us Online</p>
+  <div class="social-row">
+    <!-- Replace # with your real URLs -->
+    <a href="#" class="social-btn" target="_blank">▶ YouTube</a>
+    <a href="#" class="social-btn" target="_blank">◈ Discord</a>
+    <a href="#" class="social-btn" target="_blank">✦ TikTok</a>
+    <a href="#" class="social-btn" target="_blank">◉ Instagram</a>
+  </div>
+</main>
+
+<button id="audio-btn" aria-label="Toggle music">♪</button>
+<audio id="bgm" loop preload="none"></audio>
+
+<script src="config.js"></script>
+<script src="shell.js"></script>
+<script>
+  buildPage({ pageTitle: 'Media' });
+  const ham = document.getElementById('ham');
+  const drawer = document.getElementById('nav-drawer');
+  ham.addEventListener('click', () => { ham.classList.toggle('open'); drawer.classList.toggle('open'); });
+</script>
+</body>
+</html>

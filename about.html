@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — MalaySMP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="inner.css" />
+  <style>
+    .about-story {
+      max-width: 680px;
+      font-size: clamp(1rem, 1.6vw, 1.12rem);
+      line-height: 1.9;
+      color: var(--cream);
+      opacity: 0.78;
+      margin-bottom: 3.5rem;
+    }
+    .about-story p + p { margin-top: 1.4em; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3.5rem;
+    }
+    .team-card {
+      background: var(--panel);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem 1.2rem;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .team-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+    .team-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin: 0 auto 1rem;
+    }
+    .team-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem; letter-spacing: 0.15em;
+      color: var(--gold-light); margin-bottom: 0.3rem;
+    }
+    .team-role { font-size: 0.75rem; opacity: 0.5; font-style: italic; }
+
+    .values-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .values-list li {
+      border-left: 2px solid rgba(201,168,76,0.3);
+      padding: 0.5rem 0 0.5rem 1.2rem;
+    }
+    .values-list strong {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem; letter-spacing: 0.12em;
+      color: var(--gold); margin-bottom: 0.3rem;
+    }
+    .values-list span { font-size: 0.85rem; opacity: 0.6; }
+
+    .join-box {
+      border: 1px solid rgba(201,168,76,0.25);
+      padding: 2.5rem 2rem;
+      background: var(--panel);
+      max-width: 520px;
+    }
+    .join-box h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem; letter-spacing: 0.15em;
+      color: var(--gold-light); margin-bottom: 0.8rem;
+    }
+    .join-box p { font-size: 0.9rem; opacity: 0.65; line-height: 1.7; margin-bottom: 1.4rem; }
+    .join-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem; letter-spacing: 0.25em;
+      color: var(--dark); background: var(--gold);
+      padding: 0.7rem 1.6rem;
+      text-decoration: none;
+      transition: background 0.25s, box-shadow 0.25s;
+      font-weight: 600;
+    }
+    .join-btn:hover { background: var(--gold-light); box-shadow: 0 0 20px rgba(201,168,76,0.4); }
+  </style>
+</head>
+<body>
+
+<div id="bg"></div>
+<div id="bg-overlay"></div>
+
+<header id="topnav">
+  <a href="index.html" class="nav-logo">MalaySMP</a>
+  <button id="ham" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="events.html"  class="nav-link">Events</a></li>
+    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+    <li><a href="media.html"   class="nav-link">Media</a></li>
+    <li><a href="about.html"   class="nav-link">About Us</a></li>
+  </ul>
+</header>
+
+<nav id="nav-drawer">
+  <a href="events.html"  class="nav-link">Events</a>
+  <a href="gallery.html" class="nav-link">Gallery</a>
+  <a href="media.html"   class="nav-link">Media</a>
+  <a href="about.html"   class="nav-link">About Us</a>
+</nav>
+
+<main id="page">
+  <p class="page-eyebrow">Our Story</p>
+  <h1 class="page-title">About Us</h1>
+  <span class="page-rule"></span>
+
+  <div class="about-story">
+    <p>
+      MalaySMP was born from a simple idea: a Minecraft server that truly belongs to the Malaysian community.
+      What started as a group of friends building together has grown into one of the most vibrant
+      Malay-speaking Minecraft communities online.
+    </p>
+    <p>
+      We believe great stories are built together. Every block placed, every battle fought, every alliance
+      forged — it's all part of a living world shaped entirely by our players. No two seasons have ever
+      been the same, and no two players have ever had the same story.
+    </p>
+    <p>
+      Whether you're a seasoned veteran or logging in for the first time, there is a place for you in
+      MalaySMP. Come build something worth remembering.
+    </p>
+  </div>
+
+  <!-- Team -->
+  <p class="page-eyebrow" style="margin-bottom:1rem">The Team</p>
+  <!--
+    HOW TO ADD TEAM MEMBERS:
+    Copy a <div class="team-card"> block and change the emoji, name, and role.
+    For real avatars: replace the emoji div with <img src="assets/images/team/name.jpg" ... />
+  -->
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">👑</div>
+      <p class="team-name">Owner</p>
+      <p class="team-role">Server Founder</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">⚔️</div>
+      <p class="team-name">Admin</p>
+      <p class="team-role">Community Manager</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">🛡️</div>
+      <p class="team-name">Moderator</p>
+      <p class="team-role">Gameplay Ops</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">🎨</div>
+      <p class="team-name">Builder</p>
+      <p class="team-role">World Design</p>
+    </div>
+  </div>
+
+  <!-- Values -->
+  <p class="page-eyebrow" style="margin-bottom:1rem">What We Stand For</p>
+  <ul class="values-list">
+    <li><strong>Community</strong><span>Everyone is heard, respected, and valued.</span></li>
+    <li><strong>Creativity</strong><span>We celebrate builders, storytellers, and makers.</span></li>
+    <li><strong>Fairness</strong><span>Rules exist to protect the experience for all.</span></li>
+    <li><strong>Heritage</strong><span>Proudly Malaysian, proudly ourselves.</span></li>
+  </ul>
+
+  <!-- Join CTA -->
+  <div class="join-box">
+    <h2>Ready to Join?</h2>
+    <p>
+      MalaySMP is open to all. Apply through our Discord, get whitelisted, and start your story.
+    </p>
+    <!-- Replace # with your Discord invite link -->
+    <a href="#" class="join-btn" target="_blank">◈ Join Our Discord</a>
+  </div>
+</main>
+
+<button id="audio-btn" aria-label="Toggle music">♪</button>
+<audio id="bgm" loop preload="none"></audio>
+
+<script src="config.js"></script>
+<script src="shell.js"></script>
+<script>
+  buildPage({ pageTitle: 'About Us' });
+  const ham = document.getElementById('ham');
+  const drawer = document.getElementById('nav-drawer');
+  ham.addEventListener('click', () => { ham.classList.toggle('open'); drawer.classList.toggle('open'); });
+</script>
+</body>
+</html>
