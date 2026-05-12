@@ -23,7 +23,7 @@
 const CONFIG = {
 
   /* ── Background image ──────────────────────── */
-  background: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+  background: "assets/images/mainmenu.png",
 
   /* ── Fallback if background fails to load ──── */
   backgroundFallback: "#0a0a0a",
@@ -32,7 +32,7 @@ const CONFIG = {
   music: "assets/music/ambient.mp3",       // ← drop your .mp3 here
 
   /* ── Music volume ──────────────────────────── */
-  volume: 1.0,
+  volume: 0.7,
 
   /* ── Site metadata ──────────────────────────── */
   siteName:    "MalaySMP",
